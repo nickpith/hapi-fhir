@@ -40,10 +40,10 @@ public class FhirTesterConfig {
 		TesterConfig retVal = new TesterConfig();
 		retVal
 			.addServer()
-				.withId("home")
-				.withFhirVersion(FhirVersionEnum.DSTU2)
-				.withBaseUrl("${serverBase}/baseDstu2")
-				.withName("Local Tester")
+				.withId("home_dstu3")
+				.withFhirVersion(FhirVersionEnum.DSTU3)
+				.withBaseUrl("${serverBase}/baseDstu3")
+				.withName("DSTU3")	
 			.addServer()
 				.withId("hapi")
 				.withFhirVersion(FhirVersionEnum.DSTU2)

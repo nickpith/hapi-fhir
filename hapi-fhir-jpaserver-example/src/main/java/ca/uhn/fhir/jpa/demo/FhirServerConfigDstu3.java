@@ -1,5 +1,7 @@
 package ca.uhn.fhir.jpa.demo;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -54,12 +56,29 @@ public class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {
 	 */
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
-		BasicDataSource retVal = new BasicDataSource();
-		retVal.setDriver(new org.apache.derby.jdbc.EmbeddedDriver());
-		retVal.setUrl("jdbc:derby:directory:target/jpaserver_derby_files;create=true");
-		retVal.setUsername("");
-		retVal.setPassword("");
-		return retVal;
+		// BasicDataSource retVal = new BasicDataSource();
+		// retVal.setDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+		// retVal.setUrl("jdbc:derby:directory:./jpaserver_derby_files;create=true");
+		// retVal.setUsername("");
+		// retVal.setPassword("");
+		// return retVal;
+        URI dbUri = null;
+        try {
+            dbUri = new URI("postgres://iddnhjyvrttvik:9ylXbB6dMGfg1bvWaFvy1xH7_S@ec2-54-235-97-23.compute-1.amazonaws.com:5432/dd5l072a1hdjb0");
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+        BasicDataSource basicDataSource = new BasicDataSource();
+        basicDataSource.setUrl(dbUrl);
+        basicDataSource.setUsername(username);
+        basicDataSource.setPassword(password);
+
+        return basicDataSource;
 	}
 
 	@Bean()
@@ -75,7 +94,7 @@ public class FhirServerConfigDstu3 extends BaseJavaConfigDstu3 {
 
 	private Properties jpaProperties() {
 		Properties extraProperties = new Properties();
-		extraProperties.put("hibernate.dialect", org.hibernate.dialect.DerbyTenSevenDialect.class.getName());
+		extraProperties.put("hibernate.dialect", org.hibernate.dialect.PostgreSQL94Dialect.class.getName());
 		extraProperties.put("hibernate.format_sql", "true");
 		extraProperties.put("hibernate.show_sql", "false");
 		extraProperties.put("hibernate.hbm2ddl.auto", "update");

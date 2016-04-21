@@ -45,6 +45,11 @@
 			<artifactId>hapi-fhir-structures-dstu2</artifactId>
 			<version>1.5-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>ca.uhn.hapi.fhir</groupId>
+			<artifactId>hapi-fhir-structures-dstu3</artifactId>
+			<version>1.5-SNAPSHOT</version>
+		</dependency>
 
 		<!-- This dependency includes the JPA server itself, which is packaged separately from the rest of HAPI FHIR -->
 		<dependency>
@@ -126,6 +131,12 @@
 		<dependency>
 			<groupId>org.apache.derby</groupId>
 			<artifactId>derbyclient</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<version>9.4.1208</version>
 		</dependency>
 
 		<!-- The following dependencies are only needed for automated unit tests, you do not neccesarily need them to run the example. -->
